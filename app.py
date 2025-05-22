@@ -12,10 +12,10 @@ data.drop(columns=['location', 'engine_capacity', 'last_updated', 'registered_in
 cat_features = ['brand', 'model_name', 'province', 'fuel_type', 'transmission', 'color', 'assembly', 'body_type']
 unique_categories = {feature: sorted(data[feature].dropna().unique().tolist()) for feature in cat_features}
 
-st.markdown("<h1 style='text-align: center; color: #0A6EBD;'>PakWheels Used Car Price Predictor</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #0A6EBD;'>Pakwheels Used Car Price Predictor</h1>", unsafe_allow_html=True)
 st.markdown("---")
 
-st.markdown("### Customize Car Features")
+st.markdown("### Select Car Features")
 
 col1, col2 = st.columns(2)
 
