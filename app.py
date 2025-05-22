@@ -3,7 +3,10 @@ import numpy as np
 import pickle as pk
 import streamlit as st
 
-model = pk.load(open('D:/DS Bootcamp/Machine Learning/Used cars Price prediction/Used-Cars-Price-Prediction-Pakwheels/used_car_price_prediction.pkl', 'rb'))
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+model = pk.load(open(BASE_DIR / 'used_car_price_prediction.pkl', 'rb'))
 
 data = pd.read_csv('D:/DS Bootcamp/Machine Learning/Used cars Price prediction/Used-Cars-Price-Prediction-Pakwheels/backup_clean.csv')
 
