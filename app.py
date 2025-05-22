@@ -3,7 +3,7 @@ import numpy as np
 import pickle as pk
 import streamlit as st
 
-model = pk.load(open('D:/DS Bootcamp/Machine Learning/Used cars Price prediction/Used-Cars-Price-Prediction-Pakwheels/used_car_price_prediction.pkl', 'rb'))
+model = pk.load(open('https://github.com/danisharain12/Used-Cars-Price-Prediction-Pakwheels/blob/main/used_car_price_prediction.pkl', 'rb'))
 
 data = pd.read_csv('D:/DS Bootcamp/Machine Learning/Used cars Price prediction/Used-Cars-Price-Prediction-Pakwheels/backup_clean.csv')
 
