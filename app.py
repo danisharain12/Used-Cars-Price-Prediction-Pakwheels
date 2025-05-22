@@ -2,13 +2,16 @@ import pandas as pd
 import numpy as np
 import pickle as pk
 import streamlit as st
-
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-model = pk.load(open(BASE_DIR / 'used_car_price_prediction.pkl', 'rb'))
+model_path = BASE_DIR / 'used_car_price_prediction.pkl'
 
-data = pd.read_csv('D:/DS Bootcamp/Machine Learning/Used cars Price prediction/Used-Cars-Price-Prediction-Pakwheels/backup_clean.csv')
+with open(model_path, 'rb') as f:
+    model = pk.load(f)
+
+data_path = BASE_DIR / 'backup_clean.csv'
+data = pd.read_csv(data_path)
 
 data.drop(columns=['location', 'engine_capacity', 'last_updated', 'registered_in'], inplace=True)
 
