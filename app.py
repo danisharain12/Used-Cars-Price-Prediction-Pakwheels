@@ -3,8 +3,8 @@ import numpy as np
 import pickle as pk
 import streamlit as st
 from pathlib import Path
+from datetime import datetime
 
-# Load model and data
 BASE_DIR = Path(__file__).resolve().parent
 model_path = BASE_DIR / 'used_car_price_prediction.pkl'
 with open(model_path, 'rb') as f:
@@ -40,17 +40,22 @@ with col2:
     selected_assembly = st.selectbox('Assembly Type', unique_categories['assembly'])
     selected_body_type = st.selectbox('Body Type', unique_categories['body_type'])
 
-# Vehicle Specs Section
 st.markdown("""
     <hr style='margin-top:30px; margin-bottom:10px; border: 1px dashed #ccc;' />
     <h3 style='color:#0A6EBD'>Vehicle Specifications</h3>
 """, unsafe_allow_html=True)
 
+current_year = datetime.now().year
+
 col3, col4 = st.columns(2)
+
 with col3:
-    model_year = st.number_input('Model Year', min_value=1960, max_value=2025, value=2020, step=1)
+    model_year = st.number_input('Model Year', min_value=1960, max_value=current_year, value=2020, step=1)
+
 with col4:
-    car_age = st.number_input('Car Age (Years)', min_value=0, max_value=65, value=5, step=1)
+    max_car_age = current_year - model_year
+    car_age = st.number_input('Car Age (Years)',min_value=0, max_value=max_car_age,value=min(5, max_car_age),
+                              step=1,help=f'Max car age for model year {model_year} is {max_car_age} years')
 
 col5, col6 = st.columns(2)
 with col5:
@@ -58,23 +63,10 @@ with col5:
 with col6:
     engine_power = st.number_input('Engine Power', min_value=4, max_value=6200, value=1300, step=50)
 
-# DataFrame for prediction
-df = pd.DataFrame({
-    'brand': [selected_brand],
-    'model_name': [selected_model],
-    'province': [selected_province],
-    'fuel_type': [selected_fuel_type],
-    'transmission': [selected_transmission],
-    'color': [selected_color],
-    'assembly': [selected_assembly],
-    'body_type': [selected_body_type],
-    'model_year': [model_year],
-    'km_driven': [km_driven],
-    'engine_power': [engine_power],
-    'car_age': [car_age]
-})
+df = pd.DataFrame({'brand': [selected_brand],'model_name': [selected_model],'province': [selected_province],'fuel_type': [selected_fuel_type],
+                   'transmission': [selected_transmission],'color': [selected_color],'assembly': [selected_assembly],'body_type': [selected_body_type],
+                   'model_year': [model_year],'km_driven': [km_driven],'engine_power': [engine_power],'car_age': [car_age]})
 
-# Prediction
 st.markdown("<hr style='margin-top:30px; margin-bottom:10px;' />", unsafe_allow_html=True)
 
 if st.button('Predict Car Price'):
